@@ -1,0 +1,91 @@
+/* Dark "Retiar" skin for Puck's own panels (Outline / Fields / chrome).
+   Puck 0.22 themes entirely through CSS custom properties, so we just remap the
+   semantic tokens on a wrapper. Scoped to .rtr-studio so nothing else is
+   affected. The canvas itself is an iframe (its own document) and is themed by
+   the site's own styles, not these variables. */
+
+.rtr-studio {
+  /* Surfaces */
+  --puck-color-surface: #14211c;
+  --puck-color-surface-muted: #101a15;
+  --puck-color-surface-subtle: #1a2a23;
+  --puck-color-surface-inverse: #ece5d8;
+
+  /* Text */
+  --puck-color-text: #ece5d8;
+  --puck-color-text-secondary: #c9d1c9;
+  --puck-color-text-subtle: #9aa79b;
+  --puck-color-text-inverse: #14211c;
+
+  /* Borders */
+  --puck-color-border: #25382e;
+  --puck-color-border-hover: #3a5245;
+  --puck-color-border-muted: #1a2a23;
+  --puck-color-border-inverse: #ece5d8;
+
+  /* Interactive / accent (gold) */
+  --puck-color-interactive: #c79a4b;
+  --puck-color-interactive-soft: rgba(199, 154, 75, 0.16);
+  --puck-color-interactive-neutral-hover: #1f3128;
+  --puck-color-interactive-inverse-hover: #d8b062;
+  --puck-color-interactive-inverse-active: #b98a3c;
+  --puck-color-focus-ring: rgba(199, 154, 75, 0.5);
+
+  /* Fields */
+  --puck-field-color-bg: #1a2a23;
+  --puck-field-color-bg-disabled: #16231d;
+  --puck-field-color-border: #25382e;
+  --puck-field-color-border-hover: #3a5245;
+  --puck-field-color-border-focus: #c79a4b;
+  --puck-field-color-text: #ece5d8;
+  --puck-field-color-text-disabled: #6b7a70;
+
+  /* Icon buttons */
+  --puck-iconbutton-color-icon: #c9d1c9;
+  --puck-iconbutton-color-icon-hover: #ece5d8;
+  --puck-iconbutton-color-icon-active: #c79a4b;
+  --puck-iconbutton-color-icon-disabled: #5b6b60;
+  --puck-iconbutton-color-bg-hover: #1f3128;
+  --puck-iconbutton-color-bg-active: rgba(199, 154, 75, 0.2);
+
+  /* Action bar (on-canvas selected-component toolbar) */
+  --puck-actionbar-color-bg: #14211c;
+  --puck-actionbar-color-text: #ece5d8;
+  --puck-actionbar-color-action-active: #c79a4b;
+  --puck-actionbar-color-action-hover: #ece5d8;
+  --puck-actionbar-color-separator: #25382e;
+}
+
+/* Puck.Outline / Puck.Fields render bare (no default sidebar wrapper) when
+   composed, so give their inner sections a little breathing room + our font. */
+.rtr-studio [class*="PuckFields"],
+.rtr-studio [class*="Outline"] {
+  background: transparent;
+  color: var(--puck-color-text);
+}
+
+/* Hide Puck's built-in viewport controls — we render our own device switcher in
+   the top bar. */
+.rtr-studio [class*="ViewportControls"] {
+  display: none !important;
+}
+
+/* Slim dark scrollbars in the rails. */
+.rtr-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #33473b transparent;
+}
+.rtr-scroll::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+.rtr-scroll::-webkit-scrollbar-thumb {
+  background: #33473b;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.rtr-scroll::-webkit-scrollbar-thumb:hover {
+  background: #445a4c;
+  background-clip: content-box;
+}
