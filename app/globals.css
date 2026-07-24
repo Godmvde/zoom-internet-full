@@ -1,0 +1,327 @@
+@import "tailwindcss";
+
+@theme {
+  /* Dark space + blue palette (matches the hero) */
+  --color-navy: #050f24;        /* page background base */
+  --color-navy-soft: #0b1c3d;   /* slightly lifted dark */
+  --color-ink: #0a1730;         /* dark text — for the few light surfaces that remain */
+  --color-slate: #aebdd6;       /* secondary body text (light) */
+  --color-muted: #7e8fac;       /* tertiary muted text (light) */
+
+  /* Blues */
+  --color-zoom: #0a6cff;       /* primary brand blue */
+  --color-zoom-deep: #0046b8;
+  --color-zoom-bright: #2f8bff;
+  --color-cyan: #19c2ff;       /* energetic accent */
+  --color-sky: rgba(47, 139, 255, 0.14);   /* tinted panel / icon bg */
+  --color-sky-line: rgba(120, 170, 255, 0.28);
+
+  /* Dark surfaces / lines */
+  --color-paper: #0b1a38;       /* base card surface */
+  --color-mist: #0a1c3e;        /* alternating section bg */
+  --color-cloud: #102a55;       /* subtle fills, tracks */
+  --color-line: rgba(255, 255, 255, 0.10);
+  --color-heading: #eef4ff;     /* near-white heading text */
+
+  --font-display: 'General Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'General Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-navy);
+    color: var(--color-slate);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-zoom);
+    color: #fff;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.26em;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-cyan);
+  }
+
+  .display {
+    font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    font-style: italic;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+  }
+
+  .text-blue-grad {
+    background: linear-gradient(100deg, #19c2ff 0%, #2f8bff 38%, #0a6cff 70%, #0046b8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    font-size: 0.94rem;
+    padding: 0.9rem 1.7rem;
+    border-radius: 999px;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    cursor: pointer;
+    line-height: 1;
+  }
+  .btn-primary {
+    background: linear-gradient(120deg, var(--color-zoom-bright), var(--color-zoom) 55%, var(--color-zoom-deep));
+    color: #fff;
+    box-shadow: 0 10px 30px -10px rgba(10, 108, 255, 0.6);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 40px -12px rgba(10, 108, 255, 0.75);
+  }
+  .btn-ghost {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-heading);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(6px);
+  }
+  .btn-ghost:hover {
+    border-color: var(--color-cyan);
+    color: var(--color-cyan);
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+  }
+  .btn-white {
+    background: #fff;
+    color: var(--color-zoom-deep);
+  }
+  .btn-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.35);
+  }
+
+  .card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+    border: 1px solid var(--color-line);
+    border-radius: 1.4rem;
+    backdrop-filter: blur(8px);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s, border-color 0.4s;
+  }
+  .card-hover:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.6);
+    border-color: var(--color-sky-line);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: var(--color-sky);
+    color: #cfe2ff;
+    border: 1px solid var(--color-sky-line);
+  }
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Decorative grid background */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(10, 108, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 108, 255, 0.05) 1px, transparent 1px);
+  background-size: 46px 46px;
+}
+
+/* Animated signal pulse */
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.7; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+.pulse-ring {
+  animation: pulse-ring 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+.float-slow { animation: float-slow 6s ease-in-out infinite; }
+
+/* Cinematic Earth — brighter, punchier, more saturated */
+.earth-img {
+  filter: brightness(1.12) contrast(1.16) saturate(1.22);
+}
+
+/* Pulsing city-light glow — a screen-blended warm copy that breathes,
+   so the yellow city lights glow on a loop */
+@keyframes earth-pulse {
+  0%, 100% { opacity: 0.1; }
+  50%      { opacity: 0.52; }
+}
+.earth-pulse {
+  mix-blend-mode: screen;
+  filter: saturate(1.8) brightness(1.18) contrast(1.05);
+  animation: earth-pulse 5.5s ease-in-out infinite;
+}
+
+/* Cinematic vignette — bright focused Earth, near-black edges */
+.hero-vignette {
+  background: radial-gradient(ellipse 58% 66% at 62% 44%,
+    transparent 26%, rgba(3, 8, 20, 0.5) 58%, rgba(1, 4, 12, 0.97) 100%);
+}
+@media (max-width: 1023px) {
+  .hero-vignette {
+    background: radial-gradient(ellipse 64% 48% at 42% 52%,
+      transparent 22%, rgba(3, 8, 20, 0.5) 56%, rgba(1, 4, 12, 0.98) 100%);
+  }
+}
+
+/* Wifi beacon rings (like wifi.png) — subtle gentle pulse radiating outward */
+@keyframes wifi-ring {
+  0%   { transform: scale(0.8); opacity: 0; }
+  22%  { opacity: 0.42; }
+  100% { transform: scale(1.95); opacity: 0; }
+}
+.wifi-ring {
+  position: absolute;
+  border-radius: 9999px;
+  border: 1.5px solid rgba(120, 195, 255, 0.45);
+  box-shadow: 0 0 12px 0 rgba(60, 160, 255, 0.22);
+  animation: wifi-ring 4.4s ease-out infinite;
+}
+
+/* Electric current flowing along the Earth's network lines */
+@keyframes net-flow { to { stroke-dashoffset: -200; } }
+.net-pulse {
+  stroke-dasharray: 5 60;
+  animation: net-flow 2.8s linear infinite;
+}
+@keyframes net-node {
+  0%, 100% { opacity: 0.45; }
+  50%      { opacity: 1; }
+}
+.net-node { animation: net-node 3s ease-in-out infinite; }
+
+/* Hero atmospheric horizon glow — sits over the Earth's bright rim and breathes */
+@keyframes hero-glow-pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.06); }
+}
+.hero-glow {
+  background:
+    radial-gradient(40% 55% at 64% 42%, rgba(25, 194, 255, 0.42), transparent 70%),
+    radial-gradient(55% 60% at 72% 55%, rgba(10, 108, 255, 0.30), transparent 72%);
+  filter: blur(36px);
+  animation: hero-glow-pulse 7s ease-in-out infinite;
+}
+/* On phones the portrait Earth's bright rim sits upper-left */
+@media (max-width: 1023px) {
+  .hero-glow {
+    background:
+      radial-gradient(42% 32% at 40% 34%, rgba(25, 194, 255, 0.45), transparent 70%),
+      radial-gradient(55% 40% at 30% 46%, rgba(10, 108, 255, 0.32), transparent 74%);
+  }
+}
+
+/* Horizontal trust marquee */
+@keyframes marquee-x {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-x 30s linear infinite;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-pause:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Subtle sheen flowing across a button */
+@keyframes btn-sheen {
+  0%        { left: -60%; }
+  55%, 100% { left: 140%; }
+}
+.btn-flow { position: relative; overflow: hidden; }
+.btn-flow::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 45%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-20deg);
+  animation: btn-sheen 3.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Testimonial deck — front card flicks away */
+@keyframes card-flick {
+  0%   { transform: translate(0, 0) rotate(-1deg) scale(1); opacity: 1; }
+  100% { transform: translate(62%, -14%) rotate(16deg) scale(0.95); opacity: 0; }
+}
+.card-flick {
+  animation: card-flick 0.62s cubic-bezier(0.6, 0, 0.2, 1) forwards;
+}
+
+/* Glowing electric-blue Wi-Fi medallion (matches fone.png) */
+@keyframes wifi-glow {
+  0%, 100% {
+    box-shadow: 0 0 34px 2px rgba(45, 156, 255, 0.7), 0 0 80px 6px rgba(20, 120, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 60px 8px rgba(70, 180, 255, 0.95), 0 0 140px 22px rgba(20, 120, 255, 0.7);
+  }
+}
+.wifi-medallion {
+  background: linear-gradient(150deg, #4aa6ff 0%, #1e84ff 45%, #0a64ff 100%);
+  animation: wifi-glow 3s ease-in-out infinite;
+}
+
+/* Frosted-glass floating card (transparent, blurred) */
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.5);
+}
