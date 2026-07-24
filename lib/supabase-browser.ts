@@ -11,8 +11,8 @@ let client: SupabaseClient | null = null;
 export function getBrowserSupabase(): SupabaseClient {
   if (client) return client;
   client = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL || "https://obnmvgmwgumavmtjpxdb.supabase.co",
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "sb_publishable_2-GCIZc8HgFCCRtw3OSMKg_h4SL55p9",
     {
       auth: {
         persistSession: true,
