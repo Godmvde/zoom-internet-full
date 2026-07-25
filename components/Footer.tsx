@@ -1,9 +1,12 @@
 import Link from "next/link";
 import Logo from "./Logo";
-import { company } from "@/lib/content";
+import { getSite } from "@/lib/live";
+import { makeT } from "@/lib/t";
 import { Phone, Mail, Pin } from "./Icons";
 
-export default function Footer() {
+export default async function Footer() {
+  const { company, overrides } = await getSite();
+  const t = makeT(overrides);
   return (
     <footer className="relative bg-[var(--color-navy)] text-white mt-auto overflow-hidden">
       {/* Background picture */}
@@ -21,8 +24,8 @@ export default function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <Logo light />
-            <p className="mt-5 text-white/65 max-w-sm leading-relaxed">
-              {company.blurb}
+            <p className="mt-5 text-white/65 max-w-sm leading-relaxed" data-rtr-field="ov:footer.blurb">
+              {t("footer.blurb", company.blurb)}
             </p>
             <div className="mt-6 flex gap-3">
               <Social href={company.socials.instagram} label="Instagram">
@@ -38,38 +41,38 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-white/50 mb-4">Explore</h4>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-white/50 mb-4" data-rtr-field="ov:footer.explore_title">{t("footer.explore_title", "Explore")}</h4>
             <ul className="space-y-3 text-white/75">
-              <li><Link href="/plans" className="hover:text-[var(--color-cyan)] transition-colors">Plans &amp; Pricing</Link></li>
-              <li><Link href="/coverage" className="hover:text-[var(--color-cyan)] transition-colors">Check Coverage</Link></li>
-              <li><Link href="/about" className="hover:text-[var(--color-cyan)] transition-colors">About Us</Link></li>
-              <li><Link href="/contact" className="hover:text-[var(--color-cyan)] transition-colors">Contact &amp; Support</Link></li>
+              <li><Link href="/plans" className="hover:text-[var(--color-cyan)] transition-colors"><span data-rtr-field="ov:footer.link_plans">{t("footer.link_plans", "Plans & Pricing")}</span></Link></li>
+              <li><Link href="/coverage" className="hover:text-[var(--color-cyan)] transition-colors"><span data-rtr-field="ov:footer.link_coverage">{t("footer.link_coverage", "Check Coverage")}</span></Link></li>
+              <li><Link href="/about" className="hover:text-[var(--color-cyan)] transition-colors"><span data-rtr-field="ov:footer.link_about">{t("footer.link_about", "About Us")}</span></Link></li>
+              <li><Link href="/contact" className="hover:text-[var(--color-cyan)] transition-colors"><span data-rtr-field="ov:footer.link_contact">{t("footer.link_contact", "Contact & Support")}</span></Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-sm font-semibold uppercase tracking-wider text-white/50 mb-4">Get in touch</h4>
+            <h4 className="text-sm font-semibold uppercase tracking-wider text-white/50 mb-4" data-rtr-field="ov:footer.contact_title">{t("footer.contact_title", "Get in touch")}</h4>
             <ul className="space-y-3 text-white/75">
               <li>
                 <a href={`tel:${company.phoneHref}`} className="flex items-center gap-2.5 hover:text-[var(--color-cyan)] transition-colors">
-                  <Phone className="w-4 h-4 text-[var(--color-cyan)]" /> {company.phone}
+                  <Phone className="w-4 h-4 text-[var(--color-cyan)]" /> <span data-rtr-field="phone">{company.phone}</span>
                 </a>
               </li>
               <li>
                 <a href={`mailto:${company.email}`} className="flex items-center gap-2.5 hover:text-[var(--color-cyan)] transition-colors break-all">
-                  <Mail className="w-4 h-4 text-[var(--color-cyan)] shrink-0" /> {company.email}
+                  <Mail className="w-4 h-4 text-[var(--color-cyan)] shrink-0" /> <span data-rtr-field="email">{company.email}</span>
                 </a>
               </li>
               <li className="flex items-center gap-2.5">
-                <Pin className="w-4 h-4 text-[var(--color-cyan)]" /> {company.location}
+                <Pin className="w-4 h-4 text-[var(--color-cyan)]" /> <span data-rtr-field="address">{company.location}</span>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-3 items-center justify-between text-sm text-white/50">
-          <p>© {new Date().getFullYear()} {company.name}. All rights reserved.</p>
-          <p>{company.tagline}</p>
+          <p>© {new Date().getFullYear()} <span data-rtr-field="business_name">{company.name}</span>. All rights reserved.</p>
+          <p data-rtr-field="tagline">{company.tagline}</p>
         </div>
       </div>
     </footer>

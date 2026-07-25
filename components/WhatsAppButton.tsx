@@ -2,8 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { Whatsapp } from "./Icons";
+import { makeT, type Overrides } from "@/lib/t";
 
-export default function WhatsAppButton({ phone }: { phone: string }) {
+export default function WhatsAppButton({ phone, overrides }: { phone: string; overrides?: Overrides }) {
+  const t = makeT(overrides);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -27,8 +29,8 @@ export default function WhatsAppButton({ phone }: { phone: string }) {
         show ? "translate-y-0 opacity-100" : "translate-y-24 opacity-0"
       }`}
     >
-      <span className="hidden sm:block bg-white text-[var(--color-ink)] text-sm font-semibold px-4 py-2 rounded-full shadow-lg border border-[var(--color-line)]">
-        Chat with us
+      <span className="hidden sm:block bg-white text-[var(--color-ink)] text-sm font-semibold px-4 py-2 rounded-full shadow-lg border border-[var(--color-line)]" data-rtr-field="ov:whatsapp.label">
+        {t("whatsapp.label", "Chat with us")}
       </span>
       <span className="relative">
         <span className="absolute inset-0 rounded-full bg-[#25D366] pulse-ring" />

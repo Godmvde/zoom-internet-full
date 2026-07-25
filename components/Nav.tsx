@@ -4,16 +4,18 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Logo from "./Logo";
 import { Arrow } from "./Icons";
+import { makeT, type Overrides } from "@/lib/t";
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/plans", label: "Plans" },
-  { href: "/coverage", label: "Coverage" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/", key: "nav.home", label: "Home" },
+  { href: "/plans", key: "nav.plans", label: "Plans" },
+  { href: "/coverage", key: "nav.coverage", label: "Coverage" },
+  { href: "/about", key: "nav.about", label: "About" },
+  { href: "/contact", key: "nav.contact", label: "Contact" },
 ];
 
-export default function Nav() {
+export default function Nav({ overrides }: { overrides?: Overrides }) {
+  const t = makeT(overrides);
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -44,14 +46,14 @@ export default function Nav() {
               href={l.href}
               className="text-[0.92rem] font-medium text-[var(--color-slate)] hover:text-[var(--color-zoom)] transition-colors"
             >
-              {l.label}
+              <span data-rtr-field={`ov:${l.key}`}>{t(l.key, l.label)}</span>
             </Link>
           ))}
         </div>
 
         <div className="hidden md:flex items-center gap-3">
           <Link href="/contact" className="btn btn-primary btn-flow !py-2.5 !px-5 text-sm">
-            Get Connected <Arrow className="w-4 h-4" />
+            <span data-rtr-field="ov:nav.cta">{t("nav.cta", "Get Connected")}</span> <Arrow className="w-4 h-4" />
           </Link>
         </div>
 
@@ -81,11 +83,11 @@ export default function Nav() {
               onClick={() => setOpen(false)}
               className="py-3 text-white/90 font-medium border-b border-white/10 last:border-0"
             >
-              {l.label}
+              <span data-rtr-field={`ov:${l.key}`}>{t(l.key, l.label)}</span>
             </Link>
           ))}
           <Link href="/contact" onClick={() => setOpen(false)} className="btn btn-primary btn-flow mt-3">
-            Get Connected <Arrow className="w-4 h-4" />
+            <span data-rtr-field="ov:nav.cta">{t("nav.cta", "Get Connected")}</span> <Arrow className="w-4 h-4" />
           </Link>
         </div>
       </div>
