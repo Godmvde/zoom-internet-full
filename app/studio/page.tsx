@@ -262,7 +262,7 @@ export default function StudioPage() {
           >
             <StudioLayout
               status={status}
-              canAddSections={isAdminEditor || !!effCaps.sections}
+              canAddSections={isAdminEditor}
               userEmail={userEmail}
               role={role}
               access={access}
