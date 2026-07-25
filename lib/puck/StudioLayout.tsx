@@ -477,10 +477,10 @@ export default function StudioLayout(props: StudioChrome) {
           style={{ ...iconBtn(false), background: C.gold, color: C.bar, borderColor: C.gold, fontWeight: 700, padding: "0 16px", gap: 7 }}>
           <span style={{ fontSize: 14, lineHeight: 1 }}>↗</span> Publish
         </button>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: 6, height: 30, padding: "0 11px", borderRadius: 999, border: "1px solid " + (props.userEmail ? "rgba(107,179,158,.35)" : C.line), background: props.userEmail ? "rgba(107,179,158,.10)" : "transparent", color: props.userEmail ? C.green : C.muted, fontSize: 12.5, fontWeight: 600, flex: "none" }}>
+        <a href="/" target="_blank" rel="noopener noreferrer" title="Open the live site in a new tab" style={{ display: "inline-flex", alignItems: "center", gap: 6, height: 30, padding: "0 11px", borderRadius: 999, border: "1px solid " + (props.userEmail ? "rgba(107,179,158,.35)" : C.line), background: props.userEmail ? "rgba(107,179,158,.10)" : "transparent", color: props.userEmail ? C.green : C.muted, fontSize: 12.5, fontWeight: 600, flex: "none", textDecoration: "none", cursor: "pointer" }}>
           <span style={{ width: 7, height: 7, borderRadius: 999, background: props.userEmail ? C.green : C.muted, boxShadow: props.userEmail ? "0 0 7px rgba(107,179,158,.8)" : "none" }} />
-          {props.userEmail ? "Live" : "Local"}
-        </span>
+          {props.userEmail ? "Live ↗" : "Local"}
+        </a>
         <span ref={menuClusterRef} style={{ display: "contents" }}>
         <button onClick={() => { setShowMenu((s) => !s); setShowAccount(false); setShowHistory(false); }} style={iconBtn(showMenu)} title="More">⋯</button>
         <button onClick={() => { setShowAccount((s) => !s); setShowMenu(false); setShowHistory(false); }}

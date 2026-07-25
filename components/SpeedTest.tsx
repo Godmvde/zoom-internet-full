@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { Gauge } from "./Icons";
+import { makeT, type Overrides } from "@/lib/t";
 
 type Phase = "idle" | "ping" | "download" | "done" | "error";
 
@@ -11,7 +12,8 @@ const DOWN = (bytes: number) => `https://speed.cloudflare.com/__down?bytes=${byt
 
 const MAX_GAUGE = 200; // Mbps shown at the top of the dial
 
-export default function SpeedTest() {
+export default function SpeedTest({ overrides }: { overrides?: Overrides }) {
+  const t = makeT(overrides);
   const [phase, setPhase] = useState<Phase>("idle");
   const [mbps, setMbps] = useState(0);
   const [ping, setPing] = useState<number | null>(null);
@@ -83,13 +85,13 @@ export default function SpeedTest() {
   return (
     <div className="card p-7 sm:p-9 text-center">
       <div className="flex items-center justify-center gap-2 mb-2">
-        <span className="chip"><Gauge className="w-3.5 h-3.5" /> Speed Test</span>
+        <span className="chip"><Gauge className="w-3.5 h-3.5" /> <span data-rtr-field="ov:speedtest.chip">{t("speedtest.chip", "Speed Test")}</span></span>
       </div>
-      <h3 className="display text-2xl sm:text-[1.7rem] text-[var(--color-heading)]">
-        Test your connection
+      <h3 className="display text-2xl sm:text-[1.7rem] text-[var(--color-heading)]" data-rtr-field="ov:speedtest.heading">
+        {t("speedtest.heading", "Test your connection")}
       </h3>
-      <p className="text-[var(--color-slate)] mt-2">
-        See how your current internet stacks up against Zoom.
+      <p className="text-[var(--color-slate)] mt-2" data-rtr-field="ov:speedtest.sub">
+        {t("speedtest.sub", "See how your current internet stacks up against Zoom.")}
       </p>
 
       {/* Gauge */}
@@ -123,9 +125,9 @@ export default function SpeedTest() {
           />
           {/* needle */}
           <g style={{ transform: `rotate(${angle}deg)`, transformOrigin: "100px 100px", transition: "transform 0.25s ease-out" }}>
-            <line x1="100" y1="100" x2="100" y2="40" stroke="#eef4ff" strokeWidth="3.5" strokeLinecap="round" />
+            <line x1="100" y1="100" x2="100" y2="40" stroke="#14223d" strokeWidth="3.5" strokeLinecap="round" />
           </g>
-          <circle cx="100" cy="100" r="7" fill="#eef4ff" />
+          <circle cx="100" cy="100" r="7" fill="#14223d" />
         </svg>
       </div>
 
@@ -137,41 +139,41 @@ export default function SpeedTest() {
         </div>
         <div className="text-xs uppercase tracking-widest text-[var(--color-muted)] mt-2">
           {phase === "done"
-            ? "Your download result"
+            ? t("speedtest.result_label", "Your download result")
             : busy
-            ? "Measuring…"
-            : "Your download speed"}
+            ? t("speedtest.measuring", "Measuring…")
+            : t("speedtest.speed_label", "Your download speed")}
         </div>
       </div>
 
       <div className="flex items-center justify-center gap-6 text-sm mb-6">
         <div>
-          <div className="text-[var(--color-muted)] uppercase tracking-wider text-[0.7rem]">Ping</div>
+          <div className="text-[var(--color-muted)] uppercase tracking-wider text-[0.7rem]" data-rtr-field="ov:speedtest.ping_label">{t("speedtest.ping_label", "Ping")}</div>
           <div className="font-semibold text-[var(--color-heading)]">{ping !== null ? `${ping} ms` : "—"}</div>
         </div>
         <div className="w-px h-8 bg-[var(--color-line)]" />
         <div>
-          <div className="text-[var(--color-muted)] uppercase tracking-wider text-[0.7rem]">Status</div>
+          <div className="text-[var(--color-muted)] uppercase tracking-wider text-[0.7rem]" data-rtr-field="ov:speedtest.status_label">{t("speedtest.status_label", "Status")}</div>
           <div className="font-semibold text-[var(--color-heading)] capitalize">
-            {phase === "idle" ? "Ready" : phase === "download" ? "Testing…" : phase}
+            {phase === "idle" ? t("speedtest.status_ready", "Ready") : phase === "download" ? t("speedtest.status_testing", "Testing…") : phase}
           </div>
         </div>
       </div>
 
       <button onClick={run} disabled={busy} className="btn btn-primary w-full sm:w-auto">
-        {busy ? "Running test…" : phase === "done" ? "Test again" : "Start speed test"}
+        {busy ? t("speedtest.btn_running", "Running test…") : phase === "done" ? t("speedtest.btn_again", "Test again") : t("speedtest.btn_start", "Start speed test")}
       </button>
 
       {phase === "done" && (
         <p className="text-sm text-[var(--color-slate)] mt-4">
           {mbps < 100
-            ? "Running slower than you'd like? Zoom's Work From Home plan delivers a full 100 Mbps, unlimited."
-            : "Nice speeds! Zoom keeps it fast and unlimited — with local support you can actually reach."}
+            ? t("speedtest.result_slow", "Running slower than you'd like? Zoom's Work From Home plan delivers a full 100 Mbps, unlimited.")
+            : t("speedtest.result_fast", "Nice speeds! Zoom keeps it fast and unlimited — with local support you can actually reach.")}
         </p>
       )}
       {phase === "error" && (
-        <p className="text-sm text-red-500 mt-4">
-          Couldn&apos;t complete the test — please check your connection and try again.
+        <p className="text-sm text-red-500 mt-4" data-rtr-field="ov:speedtest.error">
+          {t("speedtest.error", "Couldn't complete the test — please check your connection and try again.")}
         </p>
       )}
     </div>

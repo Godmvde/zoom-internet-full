@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { faqs } from "@/lib/content";
+import { makeT, type Overrides } from "@/lib/t";
 
-export default function Faq() {
+export default function Faq({ overrides }: { overrides?: Overrides }) {
+  const t = makeT(overrides);
   const [open, setOpen] = useState<number | null>(0);
   return (
     <div className="max-w-3xl mx-auto divide-y divide-[var(--color-line)] border-y border-[var(--color-line)]">
@@ -16,8 +18,8 @@ export default function Faq() {
               className="w-full flex items-center justify-between gap-4 py-5 text-left group"
               aria-expanded={isOpen}
             >
-              <span className={`font-semibold transition-colors ${isOpen ? "text-[var(--color-zoom)]" : "text-[var(--color-heading)] group-hover:text-[var(--color-zoom)]"}`}>
-                {f.q}
+              <span className={`font-semibold transition-colors ${isOpen ? "text-[var(--color-zoom)]" : "text-[var(--color-heading)] group-hover:text-[var(--color-zoom)]"}`} data-rtr-field={`ov:faq.${i}.q`}>
+                {t(`faq.${i}.q`, f.q)}
               </span>
               <span
                 className={`shrink-0 w-7 h-7 rounded-full border flex items-center justify-center transition-all ${
@@ -29,7 +31,7 @@ export default function Faq() {
             </button>
             <div className={`grid transition-all duration-300 ${isOpen ? "grid-rows-[1fr] pb-5" : "grid-rows-[0fr]"}`}>
               <div className="overflow-hidden">
-                <p className="text-[var(--color-slate)] leading-relaxed pr-10">{f.a}</p>
+                <p className="text-[var(--color-slate)] leading-relaxed pr-10" data-rtr-field={`ov:faq.${i}.a`}>{t(`faq.${i}.a`, f.a)}</p>
               </div>
             </div>
           </div>

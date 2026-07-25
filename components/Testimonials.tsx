@@ -2,8 +2,11 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { testimonials } from "@/lib/content";
+import { makeT, type Overrides } from "@/lib/t";
 
 const N = testimonials.length;
+
+type Tr = (key: string, fallback: string) => string;
 
 function Stars({ n }: { n: number }) {
   return (
@@ -17,20 +20,21 @@ function Stars({ n }: { n: number }) {
   );
 }
 
-function CardInner({ t }: { t: (typeof testimonials)[number] }) {
+function CardInner({ t, idx, tr }: { t: (typeof testimonials)[number]; idx: number; tr: Tr }) {
+  const name = tr(`testimonial.${idx}.name`, t.name);
   return (
     <>
       <Stars n={t.rating} />
-      <blockquote className="text-[var(--color-heading)] text-lg mt-4 leading-relaxed flex-1">
-        &ldquo;{t.quote}&rdquo;
+      <blockquote className="text-[var(--color-heading)] text-lg mt-4 leading-relaxed flex-1" data-rtr-field={`ov:testimonial.${idx}.quote`}>
+        &ldquo;{tr(`testimonial.${idx}.quote`, t.quote)}&rdquo;
       </blockquote>
       <figcaption className="mt-6 flex items-center gap-3 pt-5 border-t border-[var(--color-line)]">
         <span className="w-11 h-11 rounded-full bg-gradient-to-br from-[var(--color-zoom-bright)] to-[var(--color-zoom-deep)] text-white flex items-center justify-center font-semibold">
-          {t.name.charAt(0)}
+          {name.charAt(0)}
         </span>
         <span>
-          <span className="block font-semibold text-[var(--color-heading)] text-sm">{t.name}</span>
-          <span className="block text-xs text-[var(--color-muted)]">{t.area}</span>
+          <span className="block font-semibold text-[var(--color-heading)] text-sm" data-rtr-field={`ov:testimonial.${idx}.name`}>{name}</span>
+          <span className="block text-xs text-[var(--color-muted)]" data-rtr-field={`ov:testimonial.${idx}.area`}>{tr(`testimonial.${idx}.area`, t.area)}</span>
         </span>
       </figcaption>
     </>
@@ -44,7 +48,8 @@ const DEPTH_STYLE = [
   { transform: "translateY(40px) scale(0.9) rotate(-2.4deg)", opacity: 1 },
 ];
 
-export default function Testimonials() {
+export default function Testimonials({ overrides }: { overrides?: Overrides }) {
+  const tr = makeT(overrides);
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState<number | null>(null);
   const [paused, setPaused] = useState(false);
@@ -89,7 +94,7 @@ export default function Testimonials() {
             className="card card-flick absolute inset-x-0 top-0 p-7 sm:p-8 flex flex-col min-h-[280px]"
             style={{ zIndex: 50 }}
           >
-            <CardInner t={testimonials[leaving]} />
+            <CardInner t={testimonials[leaving]} idx={leaving} tr={tr} />
           </figure>
         )}
 
@@ -106,7 +111,7 @@ export default function Testimonials() {
               className="card absolute inset-x-0 top-0 p-7 sm:p-8 flex flex-col min-h-[280px] cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]"
               style={{ ...ds, zIndex: 40 - depth }}
             >
-              <CardInner t={t} />
+              <CardInner t={t} idx={i} tr={tr} />
             </figure>
           );
         })}
