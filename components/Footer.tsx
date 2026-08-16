@@ -3,9 +3,10 @@ import Logo from "./Logo";
 import { getSite } from "@/lib/live";
 import { makeT } from "@/lib/t";
 import { Phone, Mail, Pin } from "./Icons";
+import RetiarCredit, { showsCredit } from "./RetiarCredit";
 
 export default async function Footer() {
-  const { company, overrides } = await getSite();
+  const { company, overrides, design } = await getSite();
   const t = makeT(overrides);
   return (
     <footer className="relative bg-[var(--color-navy)] text-white mt-auto overflow-hidden">
@@ -72,7 +73,10 @@ export default async function Footer() {
 
         <div className="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row gap-3 items-center justify-between text-sm text-white/50">
           <p>© {new Date().getFullYear()} <span data-rtr-field="business_name">{company.name}</span>. All rights reserved.</p>
-          <p data-rtr-field="tagline">{company.tagline}</p>
+          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-5">
+            <p data-rtr-field="tagline">{company.tagline}</p>
+            <RetiarCredit show={showsCredit(design)} className="hover:text-white" />
+          </div>
         </div>
       </div>
     </footer>
