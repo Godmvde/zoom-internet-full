@@ -6,7 +6,7 @@ import { getBrowserSupabase } from "@/lib/supabase-browser";
 // live in Retiar; here we just carry the signed-in session token across origins.
 
 export const RETIAR_ORIGIN =
-  process.env.NEXT_PUBLIC_RETIAR_ORIGIN || "https://retiar.vercel.app";
+  process.env.NEXT_PUBLIC_RETIAR_ORIGIN || "https://retiar.com";
 export const AI_ENDPOINT = `${RETIAR_ORIGIN}/api/ai`;
 
 async function aiToken(): Promise<string | null> {

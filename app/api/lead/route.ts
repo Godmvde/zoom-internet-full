@@ -129,7 +129,7 @@ async function retiarLead(lead: Lead) {
       .filter(Boolean)
       .join(" · ");
     const message = [lead.message, extra].filter(Boolean).join("\n\n");
-    const res = await fetch("https://retiar.vercel.app/api/leads", {
+    const res = await fetch("https://retiar.com/api/leads", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
