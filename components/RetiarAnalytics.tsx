@@ -11,7 +11,7 @@ export default function RetiarAnalytics({ slug }: { slug: string }) {
   useEffect(() => {
     if (!pathname || pathname.startsWith("/studio")) return;
     try {
-      fetch("https://retiar.vercel.app/api/pv", {
+      fetch("https://retiar.com/api/pv", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
